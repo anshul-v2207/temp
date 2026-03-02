@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporal Clusters - Patient 0a8eebfd</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .header p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            color: #333;
+        }
+        .scrollable-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .scrollable-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .cluster-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .cluster-card h3 {
+            margin: 0 0 10px 0;
+            color: #667eea;
+            font-size: 16px;
+        }
+        .cluster-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        .qa-pair {
+            background: white;
+            border-left: 3px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .question {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .answer-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .answer-box {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .answer-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        .match-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .match-exact {
+            background: #d4edda;
+            color: #155724;
+        }
+        .match-semantic {
+            background: #cce5ff;
+            color: #004085;
+        }
+        .match-none {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 Temporal Clusters Approach</h1>
+            <p><strong>Patient ID:</strong> 0a8eebfd...13abdebc</p>
+            <p><strong>Approach:</strong> Semantic Resource Grouping + 24-Hour Temporal Clustering</p>
+        </div>
+
+        <div class="content">
+
+            <div class="section">
+                <div class="section-title">📊 Clustering Statistics</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">1730</div>
+                        <div class="stat-label">Total Resources</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">9</div>
+                        <div class="stat-label">Temporal Clusters</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">250</div>
+                        <div class="stat-label">Max Cluster Size</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">21</div>
+                        <div class="stat-label">Q&A Pairs</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">📅 Cluster Timeline Visualization</div>
+                <html>
+<head><meta charset="utf-8" /></head>
+<body>
+    <div>                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.1.1.min.js" integrity="sha256-HUEFyfiTnZJxCxur99FjbKYTvKSzwDaD3/x5TqHpFu4=" crossorigin="anonymous"></script>                <div id="cluster-timeline" class="plotly-graph-div" style="height:450px; width:100%;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("cluster-timeline")) {                    Plotly.newPlot(                        "cluster-timeline",                        [{"base":"2180-03-23T11:51:00-04:00","hovertemplate":"\u003cb\u003eCluster 1\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-03-23 11:51\u003cbr\u003eEnd: 2180-03-23 12:51\u003cbr\u003eDuration: 0.0h\u003cbr\u003eResources: 102\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(141,211,199)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 1","orientation":"h","x":[1.0],"y":["Cluster 1"],"type":"bar"},{"base":"2180-05-06T19:17:00-04:00","hovertemplate":"\u003cb\u003eCluster 2\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-05-06 19:17\u003cbr\u003eEnd: 2180-05-07 14:15\u003cbr\u003eDuration: 19.0h\u003cbr\u003eResources: 170\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(255,255,179)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 2","orientation":"h","x":[18.966666666666665],"y":["Cluster 2"],"type":"bar"},{"base":"2180-06-03T12:00:00-04:00","hovertemplate":"\u003cb\u003eCluster 3\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-06-03 12:00\u003cbr\u003eEnd: 2180-06-27 05:10\u003cbr\u003eDuration: 569.2h\u003cbr\u003eResources: 250\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(190,186,218)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 3","orientation":"h","x":[569.1666666666666],"y":["Cluster 3"],"type":"bar"},{"base":"2180-06-27T05:10:00-04:00","hovertemplate":"\u003cb\u003eCluster 4\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-06-27 05:10\u003cbr\u003eEnd: 2180-07-23 11:35\u003cbr\u003eDuration: 630.4h\u003cbr\u003eResources: 250\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(251,128,114)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 4","orientation":"h","x":[630.4166666666666],"y":["Cluster 4"],"type":"bar"},{"base":"2180-07-23T11:35:00-04:00","hovertemplate":"\u003cb\u003eCluster 5\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-07-23 11:35\u003cbr\u003eEnd: 2180-07-23 16:10\u003cbr\u003eDuration: 4.6h\u003cbr\u003eResources: 250\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(128,177,211)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 5","orientation":"h","x":[4.591388888888889],"y":["Cluster 5"],"type":"bar"},{"base":"2180-07-23T16:10:29-04:00","hovertemplate":"\u003cb\u003eCluster 6\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-07-23 16:10\u003cbr\u003eEnd: 2180-07-23 21:19\u003cbr\u003eDuration: 5.1h\u003cbr\u003eResources: 250\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(253,180,98)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 6","orientation":"h","x":[5.141944444444444],"y":["Cluster 6"],"type":"bar"},{"base":"2180-07-23T21:19:00-04:00","hovertemplate":"\u003cb\u003eCluster 7\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-07-23 21:19\u003cbr\u003eEnd: 2180-07-30 09:30\u003cbr\u003eDuration: 156.2h\u003cbr\u003eResources: 182\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(179,222,105)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 7","orientation":"h","x":[156.18333333333334],"y":["Cluster 7"],"type":"bar"},{"base":"2180-08-05T20:58:00-04:00","hovertemplate":"\u003cb\u003eCluster 8\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-08-05 20:58\u003cbr\u003eEnd: 2180-08-10 12:00\u003cbr\u003eDuration: 111.0h\u003cbr\u003eResources: 250\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(252,205,229)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 8","orientation":"h","x":[111.03333333333333],"y":["Cluster 8"],"type":"bar"},{"base":"2180-08-10T12:00:00-04:00","hovertemplate":"\u003cb\u003eCluster 9\u003c\u002fb\u003e\u003cbr\u003eStart: 2180-08-10 12:00\u003cbr\u003eEnd: 2180-08-10 13:00\u003cbr\u003eDuration: 0.0h\u003cbr\u003eResources: 26\u003cbr\u003e\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"rgb(217,217,217)","line":{"color":"rgb(50,50,50)","width":1}},"name":"Cluster 9","orientation":"h","x":[1.0],"y":["Cluster 9"],"type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"type":"date","title":{"text":"Timeline"},"tickformat":"%Y-%m-%d\n%H:%M"},"yaxis":{"title":{"text":""},"autorange":"reversed"},"margin":{"l":100,"r":50,"t":50,"b":80},"font":{"size":12},"title":{"text":"Temporal Cluster Timeline"},"showlegend":false,"height":450,"hovermode":"closest","plot_bgcolor":"rgba(240,240,240,0.5)","paper_bgcolor":"white"},                        {"responsive": true}                    )                };            </script>        </div>
+</body>
+</html>
+            </div>
+
+            <div class="section">
+                <div class="section-title">🗂️ Cluster Details</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); gap: 20px;">
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 1</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">102 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-03-23 11:51</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-03-23 11:51</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>0 min</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 1
+**Time Window**: 2180-03-23 11:51 to 2180-03-23 11:51
+**Duration**: 0 days, 0 hours
+**Total Events**: 102
+
+At 11:51 on 2180-03-23, blood and urine specimens were collected and a broad laboratory evaluation was performed, including CBC, coagulation studies, comprehensive metabolic/liver panel, lipid profile, thyroid testing, vitamin D and iron studies, urinalysis, toxicology screening, and infectious disease/serology testing (including hepatitis panel, HIV viral load, RPR, and immunity/past-exposure serologies). The urine toxicology screen was negative for amphetamines, cocaine, barbiturates, benzodiazepines, methadone, and opiates, with marijuana reported as **presumptively positive**; serum ethanol was negative. Urinalysis was largely unremarkable (clear/yellow; negative for blood, leukocytes, nitrite, protein, glucose, ketones, bilirubin) with specific gravity 1.018 and pH 7, but **urobilinogen was elevated (2 mg/dL)**.
+
+Key blood findings included **thrombocytopenia (platelets 83 K/µL, confirmed by smear)** and **leukopenia (WBC 3.0 K/µL)** with otherwise preserved hemoglobin/hematocrit (Hgb 14.9 g/dL, Hct 45.4%) and **macrocytosis** (MCV 103 fL, RDW 16%, MCH 33.8 pg). Coagulation parameters were mildly prolonged (**PT 15.1 sec, INR 1.4**). The chemistry panel showed normal electrolytes and renal function (Cr 0.4 mg/dL, BUN 13 mg/dL; eGFR reported >75), but there was evidence of **hepatocellular injury/cholestatic pattern** with **AST 143 IU/L, ALT 102 IU/L, GGT 69 IU/L**, mildly high alkaline phosphatase (109 IU/L), and slightly high total bilirubin (1.6 mg/dL), along with **low albumin (3.3 g/dL)**. Vitamin D was **low (25-OH vitamin D 15 ng/mL)**; iron indices were within reference ranges. Lipids showed borderline high total cholesterol (202 mg/dL) and calculated LDL (135 mg/dL) with HDL 52 mg/dL; CEA was mildly elevated (6.1 ng/mL).
+
+Infectious/serologic results in this cluster indicated **HCV antibody positive** (with a recommendation for viral load; the HCV viral load result is present but masked in this data), **hepatitis B core antibody positive with negative surface antigen and negative surface antibody** (pattern consistent with *isolated anti-HBc*, requiring clinical correlation), and **hepatitis A antibody positive** (typically consistent with prior exposure/immunity). **HIV-1 RNA was not detected** and **RPR was nonreactive**. Other serologies suggested past exposure/immunity (e.g., EBV VCA IgG and EBNA IgG positive with VCA IgM negative; varicella, rubella, and rubeola IgG positive), and toxoplasma IgG was negative. Overall, the labs portray a patient undergoing comprehensive screening with notable **cytopenias and macrocytosis**, **mild coagulopathy**, and **transaminitis/hyperbilirubinemia** with low albumin—findings that warrant evaluation for underlying liver disease and causes of marrow suppression/nutritional deficiency, in the context of **HCV exposure** and cannabis use on tox screen.</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 2</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">170 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-05-06 19:17</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-05-07 14:15</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>19.0 hours</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 2
+**Time Window**: 2180-05-06 19:17 to 2180-05-07 14:15
+**Duration**: 0 days, 18 hours
+**Total Events**: 170
+
+The patient arrived to the ED by ambulance on **2180-05-06 19:17** with **abdominal pain and abdominal distention** (triage acuity **3**, pain score **0**). Initial and repeat vital signs were stable and afebrile (BP ~**106–107/60–63**, HR **70–79**, RR **16**, SpO₂ **97–98%**, T **97.7–98.4°F**). They were **admitted** from the ED to an inpatient medical service around **23:30**, with the hospitalization spanning into 5/7 and ultimately planned for discharge home.
+
+Initial STAT labs (22:25) showed **marked thrombocytopenia** (**platelets 71 K/µL**) with **mild coagulopathy** (**INR 1.6**, **PT 17.2 s**) and **low fibrinogen** (**156 mg/dL**). Chemistry was notable for **mild hypokalemia** (**K 3.4**) and **low albumin** (**3.3 g/dL**), with **elevated transaminases** (AST **114**, ALT **100**), and borderline high total bilirubin (**1.6**). Renal function appeared preserved/low creatinine (**0.3**) though BUN was mildly elevated (**25**). Infectious testing in this window was reassuring: **blood cultures no growth**, urine culture reported **mixed flora consistent with contamination**, and **VRE screen negative**. A urine drug screen was **positive for opiates** (other drugs negative). Repeat labs early 5/7 showed persistent thrombocytopenia (~**71 K/µL**) and ongoing mild coagulopathy (INR **1.5**, PT **16.6 s**), with potassium corrected to **4.5** after repletion; calcium was low (**7.8**).
+
+Given abdominal distention/likely ascites, the patient underwent **percutaneous abdominal drainage/paracentesis** around **00:00 on 2180-05-07**, with ascitic/peritoneal fluid studies sent. Fluid analysis showed **total nucleated cells 300/µL with 13% neutrophils** (PMN estimate ~39/µL), **RBC 8,800/µL**, **very low total protein 0.5 g/dL**, albumin **<1.0 g/dL**, and **LDH 31 IU/L**; **Gram stain showed PMNs but no organisms**, and **fluid/anaerobic cultures had no growth**, arguing against spontaneous bacterial peritonitis in this sample. During admission the patient received supportive/standing medications including **potassium chloride replacement**, **subcutaneous heparin 5,000 units** for VTE prophylaxis, **nebulized ipratropium**, and resumption/administration of home-type meds (e.g., **furosemide 40 mg PO**, **spironolactone**, and other chronic therapies). Overall, the clinical picture is of ED presentation for abdominal distention with **ascites requiring drainage**, in the setting of **chronic liver disease physiology** suggested by thrombocytopenia, mild coagulopathy, hypoalbuminemia, and transaminitis, without evidence of active bloodstream or peritoneal infection during this interval.</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 3</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">250 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-06-03 12:00</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-06-27 05:10</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>23.7 days</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 3
+**Time Window**: 2180-06-03 12:00 to 2180-06-27 05:10
+**Duration**: 23 days, 17 hours
+**Total Events**: 250
+
+Between **2180-06-03 and 2180-06-04**, routine laboratory testing showed **mild transaminitis** (ALT ~110 IU/L, alkaline phosphatase ~116 IU/L) with **slightly elevated total bilirubin** (1.6 mg/dL), **borderline low potassium** (3.3–3.4 mEq/L), and **normal renal function** (creatinine 0.4 mg/dL; eGFR reported >75). Hepatitis serologies were notable for **HBsAg negative** and **HBsAb negative** with **HBcAb positive**, a pattern most consistent with **prior exposure to hepatitis B** without detectable surface antibody (e.g., “isolated core antibody”), which can represent remote infection, false positive, or occult HBV and typically warrants correlation (e.g., HBV DNA, repeat serologies) in context of liver disease.
+
+On **2180-06-26**, the patient presented by **ambulance to the ED** with **chief complaint: abdominal distention** and severe pain at triage (**pain 10/10**). Initial vitals were largely stable (afebrile, HR ~88, SpO₂ ~97%), though later blood pressures were lower (e.g., ~95/64). ED evaluation revealed **significant hyponatremia** (Na 125–128 mEq/L) with low chloride (92–95), **mild hyperkalemia** (K 5.2 mEq/L), **hypoalbuminemia** (albumin 2.8 g/dL), persistently **elevated AST/ALT** (AST ~182, ALT ~126) and alkaline phosphatase (~117), and mild azotemia (BUN ~29) with preserved creatinine. Coagulation tests showed **prolonged PT/INR** (PT 15.5 sec, INR 1.4) and CBC showed **thrombocytopenia** (platelets ~143 K/µL) with macrocytosis—overall consistent with **chronic liver disease/portal hypertension physiology**. Lactate was normal (1.7 mmol/L). Urine drug and ethanol screens were negative.
+
+During this ED/hospital encounter (encounter continued through **2180-06-27**), the patient received **ondansetron and morphine** for symptom control. A **percutaneous abdominal drainage/paracentesis** was performed (2180-06-27 00:00) with ascitic fluid studies showing **low total protein (0.3 g/dL)** and **low nucleated cell count** (225/µL with **7% neutrophils**, ~16 PMN/µL), and **fluid gram stain/cultures with no organisms/no growth**, arguing **against spontaneous bacterial peritonitis** at that time. Blood cultures were also **no growth**. Urinalysis showed leukocyte esterase (moderate/trace), WBCs up to 13/hpf and “few bacteria,” and urine culture results included **Enterococcus species** in one report, while another culture was reported as **mixed flora consistent with contamination**—suggesting at most a **possible UTI vs contaminated specimen**. The patient was started/continued on medications commonly used in cirrhosis/encephalopathy management and prophylaxis (e.g., **lactulose order, rifaximin administered, and heparin prophylaxis**), and was ultimately **discharged home** per the hospitalization discharge disposition.</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 4</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">250 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-06-27 05:10</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-07-23 11:35</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>26.3 days</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 4
+**Time Window**: 2180-06-27 05:10 to 2180-07-23 11:35
+**Duration**: 26 days, 6 hours
+**Total Events**: 250
+
+During this 26-day period, the patient had an earlier inpatient/ICU encounter (starting 2180-06-27) with routine labs showing mild cytopenias and coagulopathy: platelets 137 K/µL (slightly low), RBC 3.6 M/µL with borderline anemia (Hgb 12.4 g/dL) and macrocytosis (MCV 99 fL, MCH elevated), and prolonged PT/INR (PT ~16.3 sec, INR 1.5). Medications administered around that time included calcium (likely supplementation), inhaled bronchodilator/anticholinergic therapy (albuterol, tiotropium), furosemide 40 mg, rifaximin 550 mg, raltegravir 400 mg and Truvada (suggesting chronic antiretroviral therapy), lactulose, acetaminophen, and albumin 25% infusions (including partial administrations). A urine culture susceptibility panel from 2180-06-29 noted “mixed bacterial flora…consistent with contamination,” limiting interpretability for a true urinary pathogen.
+
+Late in the window (2180-07-22 to 2180-07-23) the patient re-presented to the ED via ambulance with hypotension as the chief complaint, and then returned shortly after with abdominal distension/abdominal pain and lethargy; disposition progressed from discharge home after the first ED encounter to admission after the second. Serial triage/vital-signs procedures documented persistent low blood pressures (systolic frequently ~65–96 mmHg, with nadirs around 65/37) while oxygen saturation generally remained acceptable (~92–99%) and temperature was largely afebrile when recorded. ED/initial inpatient labs on 2180-07-23 showed marked electrolyte abnormalities—severe hyperkalemia (K 6.7 mEq/L) and hyponatremia (Na 126 mEq/L)—with elevated BUN (49 mg/dL) but preserved creatinine (0.7 mg/dL), normal lactate (1.6 mmol/L), and continued coagulopathy (PT ~16.2 sec, INR 1.5). Liver-associated tests were significantly abnormal (AST 275 IU/L, ALT 153 IU/L, alkaline phosphatase 114 IU/L, total bilirubin 1.9 mg/dL), with mildly elevated lipase (66 IU/L). CBC at that time showed borderline thrombocytopenia (145 K/µL) and macrocytosis (MCV 103 fL) without leukocytosis (WBC 6.9 K/µL). Infectious evaluation was not strongly supportive: blood cultures had no growth, urinalysis was negative for leukocyte esterase/nitrite/blood/protein, and urine culture grew <10,000 organisms/mL.
+
+Clinically, the narrative is of a patient with chronic liver disease physiology/encephalopathy management (lactulose/rifaximin) and chronic HIV therapy who developed recurrent ED presentations for hypotension and later lethargy with abdominal distension/pain, accompanied by severe hyperkalemia and hyponatremia and significant transaminitis/hyperbilirubinemia. In response, the patient received acute hyperkalemia-directed therapies (insulin, dextrose 50%, IV calcium gluconate) and was given ceftriaxone and additional lactulose; albumin was also administered, consistent with volume/oncotic support in the setting of suspected cirrhosis-related decompensation or circulatory dysfunction. Overall, despite low lactate and negative cultures, the combination of hypotension, altered mentation, and liver test derangements prompted hospital admission for further management and evaluation.</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 5</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">250 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-07-23 11:35</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-07-23 16:10</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>4.6 hours</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 5
+**Time Window**: 2180-07-23 11:35 to 2180-07-23 16:10
+**Duration**: 0 days, 4 hours
+**Total Events**: 250
+
+Between **11:35 and ~13:10 on 2180-07-23**, the patient was assessed in the **Emergency Department** with repeated vital-sign checks. Oxygen saturation remained acceptable (**95–97%**), respiratory rate was normal to mildly elevated (**16–18/min**), and heart rate was in the low 90s. Blood pressures were **low** (e.g., **84/40**, **86/45 mmHg**) and pain assessments documented the patient as **asleep**. A key early laboratory abnormality was **hyperkalemia**: **whole blood potassium 5.8 mEq/L** (above the stated reference range 3.3–5.1), which is clinically significant given arrhythmia risk and often reflects renal dysfunction, acidosis, hemolysis, or medication effects. The patient also received **lactulose 30 mL** (suggestive of treatment for constipation and/or hepatic encephalopathy in the right context).
+
+From **14:00 onward**, the patient transitioned to an **ICU-level encounter (MICU)**. Admission measurements were recorded (**height 152 cm/60 in; weight 39.4 kg/86.7 lb**). Initial ICU vitals showed continued **borderline/low blood pressure** (e.g., **84/48 mmHg; MAP ~56**) with adequate oxygenation on **nasal cannula 2 L/min** (SpO₂ **97–98%**). The patient reported **significant abdominal pain (7/10)** with an **aching** quality, and bedside exam/assessment noted **ascites** and **jaundiced skin**, raising concern for underlying **hepatic disease/decompensation** in the clinical context. A **MRSA screen** from a nasal swab was **negative**. Peripheral IV access was documented (**18G and 20G lines placed/active**), and neurologic assessment was reassuring (**GCS components consistent with 14–15; strength 5/5; no facial droop**).
+
+Through **15:00–16:10**, monitoring continued in the MICU with a slight increase in cardiopulmonary stress: heart rate rose to **~105 bpm** with rhythm documented as **sinus tachycardia**, while SpO₂ dipped to **~94%** (still generally acceptable) and respiratory rate remained ~**21–23/min**. Urine output was documented (**void 175 mL**) and stool was described as **loose**. New/ongoing orders included **VTE prophylaxis with heparin 5,000 units SC**, respiratory medications (e.g., **nebulized bronchodilator** and **inhaled tiotropium**), and an IV medication order (25 g, likely a concentrated IV therapy such as albumin depending on formulary), alongside nursing care plans addressing **pain** and **altered mental status risk**. Overall, the narrative is of an ED presentation with **hypotension and hyperkalemia**, followed by MICU admission for closer monitoring/support, with findings (ascites/jaundice, lactulose use) suggestive of **significant liver-related illness** and evolving **tachycardia** but without documented acute neurologic deficits during this window.</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 6</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">250 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-07-23 16:10</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-07-23 21:19</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>5.1 hours</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 6
+**Time Window**: 2180-07-23 16:10 to 2180-07-23 21:19
+**Duration**: 0 days, 5 hours
+**Total Events**: 250
+
+Between **16:10 and ~18:03 on 2180-07-23**, multiple **medication orders** were placed (oral/NG tablets including 500 mg and 400 mg formulations, an inhaled medication ordered as 1 puff from a 12 g inhaler, and other PO/NG agents), consistent with routine inpatient medication reconciliation/continuation. In the ICU encounter, the patient received **hyperoncotic albumin 25% by continuous IV infusion** in two back-to-back intervals (**17:00–17:30** and **17:33–18:03**, ~50 mL each at 100 mL/hr), suggesting intravascular volume support. Documented **oral intake** occurred at **17:01 (~200 mL)** and again at **18:57 (~100 mL)**.
+
+During the window, the patient had frequent nursing assessments showing **borderline low blood pressures** with MAPs generally in the **mid-50s to mid-60s** (e.g., ~95/58 MAP 67 at 17:00; ~86/53 MAP 60 at 18:00; ~93/41 MAP 56 at 19:00; ~90/57 MAP 64 at 20:00), with **heart rate ~94–100** and rhythm described as **sinus rhythm/sinus tachycardia**, and **no ectopy** noted. Oxygenation remained adequate on **2 L/min nasal cannula** (SpO₂ typically **95–99%**). Pain assessments were notable for **severe pain** at **18:23** (pain score **8/10**, aching; locations documented as hips and abdominal) with repositioning and emotional support provided; by **21:12** pain was still present but described as **tolerable**.
+
+Neurologically, the patient was **awake and following commands** with **GCS 15** (E4 V5 M6) and **5/5 strength** in all extremities, no facial droop, and intact speech, but had **positive delirium screening (CAM-ICU positive)** around **18:26** and again at **21:12**, with documentation of altered level of consciousness/inattention. Nursing documentation emphasized safety measures (bed alarm, rails up, hazard-free environment), family communication/visits, and care-plan items addressing **altered mental status** and **pain management**. Overall, the clinical picture over these hours is of a patient with **stable oxygenation**, **hypotension/low MAPs prompting colloid support**, **significant pain**, and **intermittent delirium** despite otherwise preserved basic neurologic examination.</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 7</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">182 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-07-23 21:19</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-07-30 09:30</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>6.5 days</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 7
+**Time Window**: 2180-07-23 21:19 to 2180-07-30 09:30
+**Duration**: 6 days, 12 hours
+**Total Events**: 182
+
+Over 7/23–7/30, the patient was monitored in the hospital/ICU setting with nursing care-plan documentation addressing pain control and delirium/altered mental status (goals included remaining free of agitation; “problem resolved” fields were marked “No,” suggesting these problems were still active at that time). Early in the window there were low blood pressure thresholds/alarms set (systolic low alarm 85 mmHg) and routine vitals around 22:00 showed borderline hypotension (BP ~85/55, MAP ~62) with HR ~94 and SpO₂ ~95%.
+
+Laboratory testing showed persistent electrolyte abnormalities and evolving hepatic/coagulation abnormalities. Initial chemistry (7/23 21:45) demonstrated mild hyponatremia (Na 132 mEq/L), low bicarbonate (HCO₃ 21 mEq/L), elevated BUN (33 mg/dL) with low/normal creatinine (0.5 mg/dL), and low phosphate (2.4 mg/dL). On 7/24, coagulation studies were prolonged (PT 19.5 sec, INR 1.8; later INR ~2.0 with PTT mildly high at 37.6 sec), platelets were low (~94–95 K/µL), and liver enzymes/bilirubin were elevated (AST up to 187 IU/L, ALT up to 114 IU/L, total bilirubin up to 2.7 mg/dL), consistent with hepatic dysfunction/cholestasis and impaired synthetic function. Sodium trended downward further by 7/27 (Na 124–126 mEq/L) with a concurrent spurious-looking hyperkalemia episode (K 6.5 mEq/L that improved to 5.4 mEq/L on repeat shortly after); by 7/30 sodium remained low (Na 127 mEq/L) and potassium was mildly high (K 5.3 mEq/L) with a hemolysis warning, suggesting possible overestimation.
+
+Therapeutically, the patient received symptomatic and supportive medications including tramadol for pain, multiple normal saline flushes, subcutaneous heparin 5,000 units for VTE prophylaxis (with at least one documented “not given” administration), and management consistent with hepatic encephalopathy/constipation prophylaxis (lactulose and rifaximin). Albumin was administered IV (albumin 25% recorded as 12.5 g doses), and inhaled respiratory medications were given (e.g., fluticasone; tiotropium was ordered then stopped). Microbiology screening for VRE was negative. Overall, the clinical picture during this interval is of an inpatient/ICU course complicated by hypotension risk, progressive hyponatremia, thrombocytopenia with elevated INR, and transaminitis/hyperbilirubinemia—managed with monitoring, supportive care, analgesia, VTE prophylaxis, and liver-directed bowel regimen therapy.</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 8</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">250 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-08-05 20:58</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-08-10 12:00</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>4.6 days</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 8
+**Time Window**: 2180-08-05 20:58 to 2180-08-10 12:00
+**Duration**: 4 days, 15 hours
+**Total Events**: 250
+
+From **2180-08-05 evening through 2180-08-07**, the patient arrived by **ambulance** to the **ED** with **severe abdominal pain and nausea/vomiting/diarrhea** (pain **10/10**, triage acuity **3**). Initial vitals showed mild tachycardia (HR ~105) with otherwise stable oxygenation and blood pressure. Early laboratory evaluation demonstrated **hyponatremia** (Na **127**), **mild hyperkalemia** (K **5.3**), **elevated BUN** (33) with normal creatinine (0.6), **transaminitis** (AST **244**, ALT **135**) with mildly elevated alkaline phosphatase and bilirubin, and **thrombocytopenia** (~131K). Coagulation tests were abnormal (**PT 17.8 sec, INR 1.7**). The patient received symptomatic ED medications including **morphine** for pain and **ondansetron** plus GI antacid/antispasmodic therapy.
+
+During the hospitalization that followed (through **2180-08-07** in the provided data), the patient underwent **percutaneous abdominal drainage/paracentesis** with ascitic/peritoneal fluid studies: **low total protein (0.7 g/dL)**, glucose 129, **low nucleated cells (220/µL)**, and **negative Gram stain and cultures (no growth)**—findings not supportive of bacterial peritonitis. Ongoing inpatient management included medications consistent with advanced liver disease care (e.g., **lactulose** and **rifaximin**) and respiratory inhalers (e.g., **fluticasone**; tiotropium documented as not given). The patient developed **worsening hyperkalemia** (K up to **6.3–6.9**) with persistent **hyponatremia** (Na fell as low as **119**), prompting standard hyperkalemia treatments including **IV calcium gluconate**, **dextrose**, **regular insulin**, and **sodium polystyrene sulfonate (Kayexalate)**, along with diuretic therapy (**furosemide**) and albumin administration. Kidney function remained preserved (creatinine **0.4–0.6**), while thrombocytopenia persisted and INR remained elevated. The hospitalization encounter in this window ultimately recorded **discharge disposition to hospice**, suggesting the broader clinical context was end-stage illness despite stabilization of some labs by **2180-08-10** (e.g., bilirubin 1.0, persistent hyponatremia Na 124).</pre>
+                        </div>
+                    </div>
+
+                    <div style="background: white; border: 2px solid #667eea; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">
+                            <h3 style="margin: 0; color: #667eea; font-size: 18px;">Cluster 9</h3>
+                            <span style="background: #667eea; color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600;">26 resources</span>
+                        </div>
+                        <div style="margin-bottom: 12px; font-size: 13px; color: #555;">
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-bottom: 8px;">
+                                <strong style="color: #667eea;">Start:</strong>
+                                <span>2180-08-10 12:00</span>
+                                <strong style="color: #667eea;">End:</strong>
+                                <span>2180-08-10 12:00</span>
+                                <strong style="color: #667eea;">Duration:</strong>
+                                <span>0 min</span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px; max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6;">
+                            <pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">## Cluster 9
+**Time Window**: 2180-08-10 12:00 to 2180-08-10 12:00
+**Duration**: 0 days, 0 hours
+**Total Events**: 26
+
+At **2180-08-10 12:00**, blood was collected for routine laboratory testing, including a **CBC with differential**, **basic metabolic panel**, **liver function tests**, and **coagulation studies** (PT/INR). No procedures, medications, or encounter-level events are shown in this time slice—this cluster is dominated by laboratory observations from the same collection time.
+
+Key findings include **mild anemia** (Hgb **11.6 g/dL**, Hct **33.7%**) with **elevated RDW** (**16.1%**) and **high MCH** (**35.3 pg**), suggesting anisocytosis and a macrocytic or mixed picture. Platelets are **mildly low** (**136 K/µL**), while total WBC is **normal** (**8.0 K/µL**) but with **relative lymphopenia** (**12.8%**). Coagulation studies are **prolonged** (**PT 17.4 sec**, **INR 1.6**), indicating impaired coagulation function or anticoagulant effect.
+
+Chemistry and hepatic markers show notable abnormalities: **AST 206 IU/L** and **ALT 120 IU/L** are significantly elevated (hepatocellular injury pattern), with **mildly elevated alkaline phosphatase** (**115 IU/L**) and **low albumin** (**3.3 g/dL**), which may reflect acute hepatic injury and/or chronic disease/nutritional/inflammatory status. Electrolytes show **hypochloremia** (**Cl 91 mEq/L**) and **mild hyperkalemia** (**K 5.3 mEq/L**) with **normal bicarbonate** (**23 mEq/L**) and **anion gap** (**15 mEq/L**). **BUN is markedly elevated** (**61 mg/dL**) with **normal creatinine** (**0.8 mg/dL**), a pattern consistent with **pre-renal azotemia/dehydration, high catabolic state, or GI bleed** rather than intrinsic renal failure. Glucose is **elevated** (**155 mg/dL**). **Alpha-fetoprotein** is **normal** (**3.8 ng/mL**). Overall, the labs suggest a patient with hepatocellular injury and coagulopathy, mild cytopenias (anemia and thrombocytopenia), and disproportionate azotemia (high BUN with preserved creatinine), warranting correlation with volume status, bleeding risk/anticoagulation use, and liver-related clinical context.</pre>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">📋 Complete Patient Summary</div>
+                <div class="scrollable-box">
+                    <pre># Patient Timeline Summary
+
+**Overall Timeline**: 2180-03-23 to 2180-08-10
+**Total Duration**: 140 days
+**Total Events**: 1730
+**Temporal Clusters**: 9
+
+## Temporal Progression
+
+The patient's medical timeline has been organized into temporal clusters, 
+grouping events that occurred in close temporal proximity. Each cluster 
+represents a distinct period of medical activity.
+
+## Cluster 1
+**Time Window**: 2180-03-23 11:51 to 2180-03-23 11:51
+**Duration**: 0 days, 0 hours
+**Total Events**: 102
+
+At 11:51 on 2180-03-23, blood and urine specimens were collected and a broad laboratory evaluation was performed, including CBC, coagulation studies, comprehensive metabolic/liver panel, lipid profile, thyroid testing, vitamin D and iron studies, urinalysis, toxicology screening, and infectious disease/serology testing (including hepatitis panel, HIV viral load, RPR, and immunity/past-exposure serologies). The urine toxicology screen was negative for amphetamines, cocaine, barbiturates, benzodiazepines, methadone, and opiates, with marijuana reported as **presumptively positive**; serum ethanol was negative. Urinalysis was largely unremarkable (clear/yellow; negative for blood, leukocytes, nitrite, protein, glucose, ketones, bilirubin) with specific gravity 1.018 and pH 7, but **urobilinogen was elevated (2 mg/dL)**.
+
+Key blood findings included **thrombocytopenia (platelets 83 K/µL, confirmed by smear)** and **leukopenia (WBC 3.0 K/µL)** with otherwise preserved hemoglobin/hematocrit (Hgb 14.9 g/dL, Hct 45.4%) and **macrocytosis** (MCV 103 fL, RDW 16%, MCH 33.8 pg). Coagulation parameters were mildly prolonged (**PT 15.1 sec, INR 1.4**). The chemistry panel showed normal electrolytes and renal function (Cr 0.4 mg/dL, BUN 13 mg/dL; eGFR reported >75), but there was evidence of **hepatocellular injury/cholestatic pattern** with **AST 143 IU/L, ALT 102 IU/L, GGT 69 IU/L**, mildly high alkaline phosphatase (109 IU/L), and slightly high total bilirubin (1.6 mg/dL), along with **low albumin (3.3 g/dL)**. Vitamin D was **low (25-OH vitamin D 15 ng/mL)**; iron indices were within reference ranges. Lipids showed borderline high total cholesterol (202 mg/dL) and calculated LDL (135 mg/dL) with HDL 52 mg/dL; CEA was mildly elevated (6.1 ng/mL).
+
+Infectious/serologic results in this cluster indicated **HCV antibody positive** (with a recommendation for viral load; the HCV viral load result is present but masked in this data), **hepatitis B core antibody positive with negative surface antigen and negative surface antibody** (pattern consistent with *isolated anti-HBc*, requiring clinical correlation), and **hepatitis A antibody positive** (typically consistent with prior exposure/immunity). **HIV-1 RNA was not detected** and **RPR was nonreactive**. Other serologies suggested past exposure/immunity (e.g., EBV VCA IgG and EBNA IgG positive with VCA IgM negative; varicella, rubella, and rubeola IgG positive), and toxoplasma IgG was negative. Overall, the labs portray a patient undergoing comprehensive screening with notable **cytopenias and macrocytosis**, **mild coagulopathy**, and **transaminitis/hyperbilirubinemia** with low albumin—findings that warrant evaluation for underlying liver disease and causes of marrow suppression/nutritional deficiency, in the context of **HCV exposure** and cannabis use on tox screen.
+
+---
+
+## Cluster 2
+**Time Window**: 2180-05-06 19:17 to 2180-05-07 14:15
+**Duration**: 0 days, 18 hours
+**Total Events**: 170
+
+The patient arrived to the ED by ambulance on **2180-05-06 19:17** with **abdominal pain and abdominal distention** (triage acuity **3**, pain score **0**). Initial and repeat vital signs were stable and afebrile (BP ~**106–107/60–63**, HR **70–79**, RR **16**, SpO₂ **97–98%**, T **97.7–98.4°F**). They were **admitted** from the ED to an inpatient medical service around **23:30**, with the hospitalization spanning into 5/7 and ultimately planned for discharge home.
+
+Initial STAT labs (22:25) showed **marked thrombocytopenia** (**platelets 71 K/µL**) with **mild coagulopathy** (**INR 1.6**, **PT 17.2 s**) and **low fibrinogen** (**156 mg/dL**). Chemistry was notable for **mild hypokalemia** (**K 3.4**) and **low albumin** (**3.3 g/dL**), with **elevated transaminases** (AST **114**, ALT **100**), and borderline high total bilirubin (**1.6**). Renal function appeared preserved/low creatinine (**0.3**) though BUN was mildly elevated (**25**). Infectious testing in this window was reassuring: **blood cultures no growth**, urine culture reported **mixed flora consistent with contamination**, and **VRE screen negative**. A urine drug screen was **positive for opiates** (other drugs negative). Repeat labs early 5/7 showed persistent thrombocytopenia (~**71 K/µL**) and ongoing mild coagulopathy (INR **1.5**, PT **16.6 s**), with potassium corrected to **4.5** after repletion; calcium was low (**7.8**).
+
+Given abdominal distention/likely ascites, the patient underwent **percutaneous abdominal drainage/paracentesis** around **00:00 on 2180-05-07**, with ascitic/peritoneal fluid studies sent. Fluid analysis showed **total nucleated cells 300/µL with 13% neutrophils** (PMN estimate ~39/µL), **RBC 8,800/µL**, **very low total protein 0.5 g/dL**, albumin **<1.0 g/dL**, and **LDH 31 IU/L**; **Gram stain showed PMNs but no organisms**, and **fluid/anaerobic cultures had no growth**, arguing against spontaneous bacterial peritonitis in this sample. During admission the patient received supportive/standing medications including **potassium chloride replacement**, **subcutaneous heparin 5,000 units** for VTE prophylaxis, **nebulized ipratropium**, and resumption/administration of home-type meds (e.g., **furosemide 40 mg PO**, **spironolactone**, and other chronic therapies). Overall, the clinical picture is of ED presentation for abdominal distention with **ascites requiring drainage**, in the setting of **chronic liver disease physiology** suggested by thrombocytopenia, mild coagulopathy, hypoalbuminemia, and transaminitis, without evidence of active bloodstream or peritoneal infection during this interval.
+
+---
+
+## Cluster 3
+**Time Window**: 2180-06-03 12:00 to 2180-06-27 05:10
+**Duration**: 23 days, 17 hours
+**Total Events**: 250
+
+Between **2180-06-03 and 2180-06-04**, routine laboratory testing showed **mild transaminitis** (ALT ~110 IU/L, alkaline phosphatase ~116 IU/L) with **slightly elevated total bilirubin** (1.6 mg/dL), **borderline low potassium** (3.3–3.4 mEq/L), and **normal renal function** (creatinine 0.4 mg/dL; eGFR reported >75). Hepatitis serologies were notable for **HBsAg negative** and **HBsAb negative** with **HBcAb positive**, a pattern most consistent with **prior exposure to hepatitis B** without detectable surface antibody (e.g., “isolated core antibody”), which can represent remote infection, false positive, or occult HBV and typically warrants correlation (e.g., HBV DNA, repeat serologies) in context of liver disease.
+
+On **2180-06-26**, the patient presented by **ambulance to the ED** with **chief complaint: abdominal distention** and severe pain at triage (**pain 10/10**). Initial vitals were largely stable (afebrile, HR ~88, SpO₂ ~97%), though later blood pressures were lower (e.g., ~95/64). ED evaluation revealed **significant hyponatremia** (Na 125–128 mEq/L) with low chloride (92–95), **mild hyperkalemia** (K 5.2 mEq/L), **hypoalbuminemia** (albumin 2.8 g/dL), persistently **elevated AST/ALT** (AST ~182, ALT ~126) and alkaline phosphatase (~117), and mild azotemia (BUN ~29) with preserved creatinine. Coagulation tests showed **prolonged PT/INR** (PT 15.5 sec, INR 1.4) and CBC showed **thrombocytopenia** (platelets ~143 K/µL) with macrocytosis—overall consistent with **chronic liver disease/portal hypertension physiology**. Lactate was normal (1.7 mmol/L). Urine drug and ethanol screens were negative.
+
+During this ED/hospital encounter (encounter continued through **2180-06-27**), the patient received **ondansetron and morphine** for symptom control. A **percutaneous abdominal drainage/paracentesis** was performed (2180-06-27 00:00) with ascitic fluid studies showing **low total protein (0.3 g/dL)** and **low nucleated cell count** (225/µL with **7% neutrophils**, ~16 PMN/µL), and **fluid gram stain/cultures with no organisms/no growth**, arguing **against spontaneous bacterial peritonitis** at that time. Blood cultures were also **no growth**. Urinalysis showed leukocyte esterase (moderate/trace), WBCs up to 13/hpf and “few bacteria,” and urine culture results included **Enterococcus species** in one report, while another culture was reported as **mixed flora consistent with contamination**—suggesting at most a **possible UTI vs contaminated specimen**. The patient was started/continued on medications commonly used in cirrhosis/encephalopathy management and prophylaxis (e.g., **lactulose order, rifaximin administered, and heparin prophylaxis**), and was ultimately **discharged home** per the hospitalization discharge disposition.
+
+---
+
+## Cluster 4
+**Time Window**: 2180-06-27 05:10 to 2180-07-23 11:35
+**Duration**: 26 days, 6 hours
+**Total Events**: 250
+
+During this 26-day period, the patient had an earlier inpatient/ICU encounter (starting 2180-06-27) with routine labs showing mild cytopenias and coagulopathy: platelets 137 K/µL (slightly low), RBC 3.6 M/µL with borderline anemia (Hgb 12.4 g/dL) and macrocytosis (MCV 99 fL, MCH elevated), and prolonged PT/INR (PT ~16.3 sec, INR 1.5). Medications administered around that time included calcium (likely supplementation), inhaled bronchodilator/anticholinergic therapy (albuterol, tiotropium), furosemide 40 mg, rifaximin 550 mg, raltegravir 400 mg and Truvada (suggesting chronic antiretroviral therapy), lactulose, acetaminophen, and albumin 25% infusions (including partial administrations). A urine culture susceptibility panel from 2180-06-29 noted “mixed bacterial flora…consistent with contamination,” limiting interpretability for a true urinary pathogen.
+
+Late in the window (2180-07-22 to 2180-07-23) the patient re-presented to the ED via ambulance with hypotension as the chief complaint, and then returned shortly after with abdominal distension/abdominal pain and lethargy; disposition progressed from discharge home after the first ED encounter to admission after the second. Serial triage/vital-signs procedures documented persistent low blood pressures (systolic frequently ~65–96 mmHg, with nadirs around 65/37) while oxygen saturation generally remained acceptable (~92–99%) and temperature was largely afebrile when recorded. ED/initial inpatient labs on 2180-07-23 showed marked electrolyte abnormalities—severe hyperkalemia (K 6.7 mEq/L) and hyponatremia (Na 126 mEq/L)—with elevated BUN (49 mg/dL) but preserved creatinine (0.7 mg/dL), normal lactate (1.6 mmol/L), and continued coagulopathy (PT ~16.2 sec, INR 1.5). Liver-associated tests were significantly abnormal (AST 275 IU/L, ALT 153 IU/L, alkaline phosphatase 114 IU/L, total bilirubin 1.9 mg/dL), with mildly elevated lipase (66 IU/L). CBC at that time showed borderline thrombocytopenia (145 K/µL) and macrocytosis (MCV 103 fL) without leukocytosis (WBC 6.9 K/µL). Infectious evaluation was not strongly supportive: blood cultures had no growth, urinalysis was negative for leukocyte esterase/nitrite/blood/protein, and urine culture grew <10,000 organisms/mL.
+
+Clinically, the narrative is of a patient with chronic liver disease physiology/encephalopathy management (lactulose/rifaximin) and chronic HIV therapy who developed recurrent ED presentations for hypotension and later lethargy with abdominal distension/pain, accompanied by severe hyperkalemia and hyponatremia and significant transaminitis/hyperbilirubinemia. In response, the patient received acute hyperkalemia-directed therapies (insulin, dextrose 50%, IV calcium gluconate) and was given ceftriaxone and additional lactulose; albumin was also administered, consistent with volume/oncotic support in the setting of suspected cirrhosis-related decompensation or circulatory dysfunction. Overall, despite low lactate and negative cultures, the combination of hypotension, altered mentation, and liver test derangements prompted hospital admission for further management and evaluation.
+
+---
+
+## Cluster 5
+**Time Window**: 2180-07-23 11:35 to 2180-07-23 16:10
+**Duration**: 0 days, 4 hours
+**Total Events**: 250
+
+Between **11:35 and ~13:10 on 2180-07-23**, the patient was assessed in the **Emergency Department** with repeated vital-sign checks. Oxygen saturation remained acceptable (**95–97%**), respiratory rate was normal to mildly elevated (**16–18/min**), and heart rate was in the low 90s. Blood pressures were **low** (e.g., **84/40**, **86/45 mmHg**) and pain assessments documented the patient as **asleep**. A key early laboratory abnormality was **hyperkalemia**: **whole blood potassium 5.8 mEq/L** (above the stated reference range 3.3–5.1), which is clinically significant given arrhythmia risk and often reflects renal dysfunction, acidosis, hemolysis, or medication effects. The patient also received **lactulose 30 mL** (suggestive of treatment for constipation and/or hepatic encephalopathy in the right context).
+
+From **14:00 onward**, the patient transitioned to an **ICU-level encounter (MICU)**. Admission measurements were recorded (**height 152 cm/60 in; weight 39.4 kg/86.7 lb**). Initial ICU vitals showed continued **borderline/low blood pressure** (e.g., **84/48 mmHg; MAP ~56**) with adequate oxygenation on **nasal cannula 2 L/min** (SpO₂ **97–98%**). The patient reported **significant abdominal pain (7/10)** with an **aching** quality, and bedside exam/assessment noted **ascites** and **jaundiced skin**, raising concern for underlying **hepatic disease/decompensation** in the clinical context. A **MRSA screen** from a nasal swab was **negative**. Peripheral IV access was documented (**18G and 20G lines placed/active**), and neurologic assessment was reassuring (**GCS components consistent with 14–15; strength 5/5; no facial droop**).
+
+Through **15:00–16:10**, monitoring continued in the MICU with a slight increase in cardiopulmonary stress: heart rate rose to **~105 bpm** with rhythm documented as **sinus tachycardia**, while SpO₂ dipped to **~94%** (still generally acceptable) and respiratory rate remained ~**21–23/min**. Urine output was documented (**void 175 mL**) and stool was described as **loose**. New/ongoing orders included **VTE prophylaxis with heparin 5,000 units SC**, respiratory medications (e.g., **nebulized bronchodilator** and **inhaled tiotropium**), and an IV medication order (25 g, likely a concentrated IV therapy such as albumin depending on formulary), alongside nursing care plans addressing **pain** and **altered mental status risk**. Overall, the narrative is of an ED presentation with **hypotension and hyperkalemia**, followed by MICU admission for closer monitoring/support, with findings (ascites/jaundice, lactulose use) suggestive of **significant liver-related illness** and evolving **tachycardia** but without documented acute neurologic deficits during this window.
+
+---
+
+## Cluster 6
+**Time Window**: 2180-07-23 16:10 to 2180-07-23 21:19
+**Duration**: 0 days, 5 hours
+**Total Events**: 250
+
+Between **16:10 and ~18:03 on 2180-07-23**, multiple **medication orders** were placed (oral/NG tablets including 500 mg and 400 mg formulations, an inhaled medication ordered as 1 puff from a 12 g inhaler, and other PO/NG agents), consistent with routine inpatient medication reconciliation/continuation. In the ICU encounter, the patient received **hyperoncotic albumin 25% by continuous IV infusion** in two back-to-back intervals (**17:00–17:30** and **17:33–18:03**, ~50 mL each at 100 mL/hr), suggesting intravascular volume support. Documented **oral intake** occurred at **17:01 (~200 mL)** and again at **18:57 (~100 mL)**.
+
+During the window, the patient had frequent nursing assessments showing **borderline low blood pressures** with MAPs generally in the **mid-50s to mid-60s** (e.g., ~95/58 MAP 67 at 17:00; ~86/53 MAP 60 at 18:00; ~93/41 MAP 56 at 19:00; ~90/57 MAP 64 at 20:00), with **heart rate ~94–100** and rhythm described as **sinus rhythm/sinus tachycardia**, and **no ectopy** noted. Oxygenation remained adequate on **2 L/min nasal cannula** (SpO₂ typically **95–99%**). Pain assessments were notable for **severe pain** at **18:23** (pain score **8/10**, aching; locations documented as hips and abdominal) with repositioning and emotional support provided; by **21:12** pain was still present but described as **tolerable**.
+
+Neurologically, the patient was **awake and following commands** with **GCS 15** (E4 V5 M6) and **5/5 strength** in all extremities, no facial droop, and intact speech, but had **positive delirium screening (CAM-ICU positive)** around **18:26** and again at **21:12**, with documentation of altered level of consciousness/inattention. Nursing documentation emphasized safety measures (bed alarm, rails up, hazard-free environment), family communication/visits, and care-plan items addressing **altered mental status** and **pain management**. Overall, the clinical picture over these hours is of a patient with **stable oxygenation**, **hypotension/low MAPs prompting colloid support**, **significant pain**, and **intermittent delirium** despite otherwise preserved basic neurologic examination.
+
+---
+
+## Cluster 7
+**Time Window**: 2180-07-23 21:19 to 2180-07-30 09:30
+**Duration**: 6 days, 12 hours
+**Total Events**: 182
+
+Over 7/23–7/30, the patient was monitored in the hospital/ICU setting with nursing care-plan documentation addressing pain control and delirium/altered mental status (goals included remaining free of agitation; “problem resolved” fields were marked “No,” suggesting these problems were still active at that time). Early in the window there were low blood pressure thresholds/alarms set (systolic low alarm 85 mmHg) and routine vitals around 22:00 showed borderline hypotension (BP ~85/55, MAP ~62) with HR ~94 and SpO₂ ~95%.
+
+Laboratory testing showed persistent electrolyte abnormalities and evolving hepatic/coagulation abnormalities. Initial chemistry (7/23 21:45) demonstrated mild hyponatremia (Na 132 mEq/L), low bicarbonate (HCO₃ 21 mEq/L), elevated BUN (33 mg/dL) with low/normal creatinine (0.5 mg/dL), and low phosphate (2.4 mg/dL). On 7/24, coagulation studies were prolonged (PT 19.5 sec, INR 1.8; later INR ~2.0 with PTT mildly high at 37.6 sec), platelets were low (~94–95 K/µL), and liver enzymes/bilirubin were elevated (AST up to 187 IU/L, ALT up to 114 IU/L, total bilirubin up to 2.7 mg/dL), consistent with hepatic dysfunction/cholestasis and impaired synthetic function. Sodium trended downward further by 7/27 (Na 124–126 mEq/L) with a concurrent spurious-looking hyperkalemia episode (K 6.5 mEq/L that improved to 5.4 mEq/L on repeat shortly after); by 7/30 sodium remained low (Na 127 mEq/L) and potassium was mildly high (K 5.3 mEq/L) with a hemolysis warning, suggesting possible overestimation.
+
+Therapeutically, the patient received symptomatic and supportive medications including tramadol for pain, multiple normal saline flushes, subcutaneous heparin 5,000 units for VTE prophylaxis (with at least one documented “not given” administration), and management consistent with hepatic encephalopathy/constipation prophylaxis (lactulose and rifaximin). Albumin was administered IV (albumin 25% recorded as 12.5 g doses), and inhaled respiratory medications were given (e.g., fluticasone; tiotropium was ordered then stopped). Microbiology screening for VRE was negative. Overall, the clinical picture during this interval is of an inpatient/ICU course complicated by hypotension risk, progressive hyponatremia, thrombocytopenia with elevated INR, and transaminitis/hyperbilirubinemia—managed with monitoring, supportive care, analgesia, VTE prophylaxis, and liver-directed bowel regimen therapy.
+
+---
+
+## Cluster 8
+**Time Window**: 2180-08-05 20:58 to 2180-08-10 12:00
+**Duration**: 4 days, 15 hours
+**Total Events**: 250
+
+From **2180-08-05 evening through 2180-08-07**, the patient arrived by **ambulance** to the **ED** with **severe abdominal pain and nausea/vomiting/diarrhea** (pain **10/10**, triage acuity **3**). Initial vitals showed mild tachycardia (HR ~105) with otherwise stable oxygenation and blood pressure. Early laboratory evaluation demonstrated **hyponatremia** (Na **127**), **mild hyperkalemia** (K **5.3**), **elevated BUN** (33) with normal creatinine (0.6), **transaminitis** (AST **244**, ALT **135**) with mildly elevated alkaline phosphatase and bilirubin, and **thrombocytopenia** (~131K). Coagulation tests were abnormal (**PT 17.8 sec, INR 1.7**). The patient received symptomatic ED medications including **morphine** for pain and **ondansetron** plus GI antacid/antispasmodic therapy.
+
+During the hospitalization that followed (through **2180-08-07** in the provided data), the patient underwent **percutaneous abdominal drainage/paracentesis** with ascitic/peritoneal fluid studies: **low total protein (0.7 g/dL)**, glucose 129, **low nucleated cells (220/µL)**, and **negative Gram stain and cultures (no growth)**—findings not supportive of bacterial peritonitis. Ongoing inpatient management included medications consistent with advanced liver disease care (e.g., **lactulose** and **rifaximin**) and respiratory inhalers (e.g., **fluticasone**; tiotropium documented as not given). The patient developed **worsening hyperkalemia** (K up to **6.3–6.9**) with persistent **hyponatremia** (Na fell as low as **119**), prompting standard hyperkalemia treatments including **IV calcium gluconate**, **dextrose**, **regular insulin**, and **sodium polystyrene sulfonate (Kayexalate)**, along with diuretic therapy (**furosemide**) and albumin administration. Kidney function remained preserved (creatinine **0.4–0.6**), while thrombocytopenia persisted and INR remained elevated. The hospitalization encounter in this window ultimately recorded **discharge disposition to hospice**, suggesting the broader clinical context was end-stage illness despite stabilization of some labs by **2180-08-10** (e.g., bilirubin 1.0, persistent hyponatremia Na 124).
+
+---
+
+## Cluster 9
+**Time Window**: 2180-08-10 12:00 to 2180-08-10 12:00
+**Duration**: 0 days, 0 hours
+**Total Events**: 26
+
+At **2180-08-10 12:00**, blood was collected for routine laboratory testing, including a **CBC with differential**, **basic metabolic panel**, **liver function tests**, and **coagulation studies** (PT/INR). No procedures, medications, or encounter-level events are shown in this time slice—this cluster is dominated by laboratory observations from the same collection time.
+
+Key findings include **mild anemia** (Hgb **11.6 g/dL**, Hct **33.7%**) with **elevated RDW** (**16.1%**) and **high MCH** (**35.3 pg**), suggesting anisocytosis and a macrocytic or mixed picture. Platelets are **mildly low** (**136 K/µL**), while total WBC is **normal** (**8.0 K/µL**) but with **relative lymphopenia** (**12.8%**). Coagulation studies are **prolonged** (**PT 17.4 sec**, **INR 1.6**), indicating impaired coagulation function or anticoagulant effect.
+
+Chemistry and hepatic markers show notable abnormalities: **AST 206 IU/L** and **ALT 120 IU/L** are significantly elevated (hepatocellular injury pattern), with **mildly elevated alkaline phosphatase** (**115 IU/L**) and **low albumin** (**3.3 g/dL**), which may reflect acute hepatic injury and/or chronic disease/nutritional/inflammatory status. Electrolytes show **hypochloremia** (**Cl 91 mEq/L**) and **mild hyperkalemia** (**K 5.3 mEq/L**) with **normal bicarbonate** (**23 mEq/L**) and **anion gap** (**15 mEq/L**). **BUN is markedly elevated** (**61 mg/dL**) with **normal creatinine** (**0.8 mg/dL**), a pattern consistent with **pre-renal azotemia/dehydration, high catabolic state, or GI bleed** rather than intrinsic renal failure. Glucose is **elevated** (**155 mg/dL**). **Alpha-fetoprotein** is **normal** (**3.8 ng/mL**). Overall, the labs suggest a patient with hepatocellular injury and coagulopathy, mild cytopenias (anemia and thrombocytopenia), and disproportionate azotemia (high BUN with preserved creatinine), warranting correlation with volume status, bleeding risk/anticoagulation use, and liver-related clinical context.
+
+---
+</pre>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">❓ Questions & Answers Evaluation</div>
+                <div class="scrollable-box">
+
+                    <div class="qa-pair">
+                        <div class="question">Q: How much is the difference of heart rate of patient 10000032 last measured on the first icu visit compared to the second to last value measured on the first icu visit?<span class="match-badge match-semantic">≈ Semantic Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[0.]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>0</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Identify the first ICU visit: Cluster 12 shows MICU location from 2180-07-23T14:00:00-04:00 to 2180-07-23T23:50:47-04:00 (first ICU stay). In Cluster 13 (MICU monitoring), heart rates during this ICU ...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Tell me the name of the specimen test that patient 10000032 first received since 07/2180?<span class="match-badge match-none">✗ No Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[['MRSA SCREEN']]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>ALBU17H</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: since 07/2180 means from 2180-07-01 onward (Rule 10). Search earliest event with a specimen test name after 2180-07-01: the first dated entry in July is Cluster 5 at 2180-07-22T17:59:00...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Has patient 10000032 gone through any procedure since 2180?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[1]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>1</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Question asks if any procedure occurred since 2180 (>=2180-01-01). The summary includes multiple procedures in 2180, e.g., Cluster 7: percutaneous abdominal drainage procedure completed at 2180-05-07T...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: When was patient 10000032 first given a creatinine test in 05/2180?<span class="match-badge match-none">✗ No Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[['2180-05-07 05:05:00']]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>2180-05-06 22:25:00</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: in 05/2180 means 2180-05-01 through 2180-05-31 (Rule 1/10). Search for creatinine tests in May 2180: Cluster 0 lists creatinine 0.3 mg/dL at 2180-05-06T22:25:00-04:00. Cluster 7 also ha...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Was patient 10000032 bicarbonate tested on the first hospital stay?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[1]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>1</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Determine the first hospital stay (continuous inpatient stay): first admission begins with ED encounter Cluster 6 (2180-05-06) and continues into Cluster 7 (transfer to Transplant ward, discharged HOM...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: What was the name of the specimen test which patient 10000032 has first received since 04/2180?<span class="match-badge match-none">✗ No Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[['URINE']]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>BLOOD CULTURE</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: since 04/2180 means from 2180-04-01 onward. Search for earliest specimen test after 2180-04-01: Cluster 2 at 2180-05-06T22:25:00-04:00 includes a specimen labeled “BLOOD CULTURE” collec...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: When did since 05/2180 patient 10000032 receive a microbiology test for the first time?<span class="match-badge match-none">✗ No Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[['2180-05-07 00:10:00']]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>2180-05-06 22:25:00</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: since 05/2180 means from 2180-05-01 onward. We need the first microbiology test (e.g., cultures, MRSA/VRE screens). The earliest microbiology-related test after May 1 is in Cluster 2: “...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Was patient 10000032 ordered insulin (regular) for hyperkalemia, tiotropium bromide, or albuterol 0.083% neb soln during their first hospital visit?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[0]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>0</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">First hospital visit = May 6-7, 2180 admission (Clusters 6 and 7). Check whether during this visit the patient was ordered any of: insulin (regular) for hyperkalemia, tiotropium bromide, albuterol 0.0...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Was patient 10000032 tested on pt in 08/2180?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[1]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>1</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: in 08/2180 means 2180-08-01 through 2180-08-31. Search for PT tests in August 2180: Cluster 0/15 show coagulation at 2180-08-05T21:28:00-04:00 PT 17.8 sec and INR 1.7; Cluster 15 shows ...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: How was patient 10000032 admitted in terms of admission type for the last time in the hospital?<span class="match-badge match-semantic">≈ Semantic Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[['EW EMER.']]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>Emergency</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Find the last hospital admission/visit in the timeline: latest encounters are Cluster 14/15 (Aug 5-7, 2180) ending with discharge disposition HOSPICE. Admission source in Cluster 15 is EMERGENCY ROOM ...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: When did since 04/2180 patient 10000032 take the last microbiology test?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[['2180-08-06 20:35:00']]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>2180-08-06 20:35:00</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: since 04/2180 means from 2180-04-01 onward. We need the last microbiology test in that period. Scan microbiology events: May blood culture (2180-05-06), May urine culture and VRE screen...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Count up how many times patient 10000032 was admitted to the icu since 1 year ago.<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[1]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>1</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Since 1 year ago from current time 2180-12-31 means from 2179-12-31 onward; all provided data in 2180 qualifies. Count ICU admissions (continuous ICU stays) per Rule 3. The summary shows one MICU stay...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Has patient 10000032 undergone the percutaneous abdominal drainage procedure in 2180?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[1]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>1</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Question: any percutaneous abdominal drainage procedure in 2180. Search procedures: Cluster 7 shows percutaneous abdominal drainage completed at 2180-05-07T00:00:00-04:00; Cluster 9 shows percutaneous...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: When has patient 10000032 been given urea nitrogen test for the first time in 08/2180?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[['2180-08-06 06:36:00']]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>2180-08-06 06:36:00</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: in 08/2180 means 2180-08-01 to 2180-08-31. Search for Urea Nitrogen (BUN) tests in August: Cluster 0 shows urea nitrogen 33 at 2180-08-05T21:20 and 61 at 2180-08-10T12:00; Cluster 15 sh...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Has patient 10000032 been given any procedure since 1 year ago?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[1]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>1</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Since 1 year ago from 2180-12-31 is from 2179-12-31 onward; all procedures in 2180 count. Procedures present include percutaneous abdominal drainage (2180-05-07, 2180-06-27, 2180-08-06) and other docu...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: How many distinct drugs were prescribed to patient 10000032 since 10 months ago?<span class="match-badge match-none">✗ No Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[32]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>15</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Since 10 months ago from 2180-12-31 goes back to 2180-03-01 (approx; using month boundary). All medication orders/prescriptions in the summary (Mar-Aug 2180) qualify. Count distinct drug names prescri...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: When did patient 10000032 receive a mrsa screen microbiology test for the first time since 03/2180?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[['2180-07-23 14:14:00']]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>2180-07-23 14:14:00</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: since 03/2180 means from 2180-03-01 onward. Search for MRSA screen microbiology test: Cluster 12 documents MRSA SCREEN observation with specimen collected at 2180-07-23T14:14:00-04:00, ...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Get the count of hospital visits by patient 10000032 since 1 year ago.<span class="match-badge match-none">✗ No Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[4]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>5</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Since 1 year ago from 2180-12-31 includes all recorded encounters in 2180. Count hospital visits (continuous inpatient stays) per Rule 2: (1) May 6 ED (Cluster 6) -> admitted to transplant (Cluster 7)...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Has albuterol 0.083% neb soln, sulfameth/trimethoprim ds, or furosemide been prescribed to patient 10000032 since 04/2180?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[1]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>1</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: since 04/2180 means from 2180-04-01 onward. Check if any of the listed meds were prescribed/ordered: Albuterol 0.083% neb soln was ordered/dispensed in Cluster 12 at 2180-07-23T16:07:03...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: Is respiratory rate of patient 10000032 last measured on the first icu visit greater than the first value measured on the first icu visit?<span class="match-badge match-exact">✓ Exact Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[0]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>0</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">First ICU visit is MICU from 2180-07-23T14:00:00-04:00 to 2180-07-23T23:50:47-04:00 (Cluster 12). In Cluster 13 during MICU, first recorded respiratory rate in this ICU period: 2180-07-23T14:12:00-04:...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-pair">
+                        <div class="question">Q: What was the total number of distinct drugs patient 10000032 was prescribed since 03/2180?<span class="match-badge match-none">✗ No Match</span></div>
+                        <div class="answer-row">
+                            <div class="answer-box">
+                                <div class="answer-label">Ground Truth</div>
+                                <div>[[32]]</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Prediction</div>
+                                <div>31</div>
+                            </div>
+                            <div class="answer-box">
+                                <div class="answer-label">LLM Reasoning</div>
+                                <div style="font-size: 11px; max-height: 60px; overflow-y: auto;">Time boundary: since 03/2180 means from 2180-03-01 onward. All medication prescriptions/orders/dispenses in the provided record (Mar-Aug 2180) qualify. Count distinct drug names prescribed (ignore dos...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
